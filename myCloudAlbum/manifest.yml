@@ -1,0 +1,7 @@
+applications:
+- name: myCloudAlbum
+  memory: 1024M
+  host: myCloudAlbum
+  domain: stage1.mybluemix.net
+  services: {
+    }
