@@ -58,9 +58,9 @@ public class SimplerJDBCHelper {
           System.out.println("SQLDB service is available in the VCAP now.");
         } else {
         	driver = "com.ibm.db2.jcc.DB2Driver";
-        	user = "u38350";
-        	password = "rWyZE8kl9r";
-        	databaseUrl = "jdbc:db2://198.11.239.114:50000/I_043998";
+        	user = "db2inst1";
+        	password = "db2admin";
+        	databaseUrl = "jdbc:db2://192.168.220.128:50000/DB_01";
         	System.out.println("VCAP_SERVICES is null. init the database connection paramater by hard code.");
         } 
        

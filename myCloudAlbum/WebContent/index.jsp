@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
-<title>BlueMix Cloud Photo Album</title>
+	<meta charset="utf-8"/>
+	<title>BlueMix Cloud Photo Album</title>
 	<link rel="stylesheet" href="css/themes/base/jquery.ui.all.css"  type="text/css"/>
 	<link rel="stylesheet" href="css/demos.css"  type="text/css"/>
 	<link rel="stylesheet" href="css/mystyle.css" type="text/css"/>
@@ -35,7 +35,11 @@
 		var name = $( "#name" ),
 			email = $( "#email" ),
 			password = $( "#password" ),
-			allFields = $( [] ).add( name ).add( email ).add( password ),
+			profile_pwd1 = $( "#profile_pwd1" ),
+			profile_pwd2 = $( "#profile_pwd2" ),
+			sign_in_mail = $( "#sign_in_mail" ),
+			sign_in_pwd = $( "#sign_in_pwd" ),
+			allFields = $( [] ).add( name ).add( email ).add( password ).add(profile_pwd1).add(profile_pwd2).add(sign_in_mail).add(sign_in_pwd),
 			tips = $( ".validateTips" );
 
 		function updateTips( t ) {
@@ -46,6 +50,17 @@
 				tips.removeClass( "ui-state-highlight", 1500 );
 			}, 500 );
 		}
+
+/* 		function checkSame( o1, o2 ) {
+			if ( o1.val() != o2.val() ) {
+				o1.addClass( "ui-state-error" );
+				o2.addClass( "ui-state-error" );
+				updateTips( "The twice passwords are not same." );
+				return false;
+			} else {
+				return true;
+			}
+		} */
 
 		function checkLength( o, n, min, max ) {
 			if ( o.val().length > max || o.val().length < min ) {
@@ -68,7 +83,7 @@
 			}
 		}
 		
-		$( "#dialog-form" ).dialog({
+		$( "#register_div" ).dialog({
 			autoOpen: false,
 			height: 500,
 			width: 350,
@@ -91,7 +106,7 @@
 			
 					if ( bValid ) {
 						
-						$( this ).dialog( "close" );
+						//$( this ).dialog( "close" );
 						var form = document.getElementById("register_form");
 						form.submit();
 					}
@@ -104,8 +119,42 @@
 				allFields.val( "" ).removeClass( "ui-state-error" );
 			}
 		});
-		
-		$( "#sign_in_form" ).dialog({
+
+		$( "#profile_div" ).dialog({
+			autoOpen: false,
+			height: 500,
+			width: 350,
+			modal: true,
+			buttons: {
+				"Save": function() {
+					var bValid = true;
+					allFields.removeClass( "ui-state-error" );
+					bValid = bValid && checkLength( profile_pwd1, "profile_pwd1", 5, 16 );
+					bValid = bValid && checkRegexp( profile_pwd1, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+
+					bValid = bValid && checkLength( profile_pwd2, "profile_pwd2", 5, 16 );
+					bValid = bValid && checkRegexp( profile_pwd2, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+					
+					bValid = bValid && checkSame(profile_pwd1, profile_pwd2);
+			
+					if ( bValid ) {
+						//$( this ).dialog( "close" );
+						var form = document.getElementById("profile_form");
+						form.submit();
+					}
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			},
+			close: function() {
+				allFields.val( "" ).removeClass( "ui-state-error" );
+			}
+		});
+		$( "#sign_out_div" ).ready(function (){
+			$(this).css("visible", "false");
+		});
+		$( "#sign_in_div" ).dialog({
 			autoOpen: false,
 			height: 300,
 			width: 350,
@@ -115,15 +164,15 @@
 					var bValid = true;
 					allFields.removeClass( "ui-state-error" );
 
-					bValid = bValid && checkLength( name, "sign_in_name", 3, 16 );
-					bValid = bValid && checkLength( password, "sign_in_pwd", 5, 16 );
+					bValid = bValid && checkLength( sign_in_mail, "sign_in_mail", 3, 16 );
+					bValid = bValid && checkLength( sign_in_pwd, "sign_in_pwd", 5, 16 );
 					
 					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( name, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+					bValid = bValid && checkRegexp( sign_in_mail, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
+					bValid = bValid && checkRegexp( sign_in_pwd, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
 			
 					if ( bValid ) {
-						$( this ).dialog( "close" );
+						//$( this ).dialog( "close" );
 						var form = document.getElementById("sign_in_form");
 						form.submit();
 					}
@@ -136,17 +185,18 @@
 				allFields.val( "" ).removeClass( "ui-state-error" );
 			}
 		});
-		
-		
-		$("#create-user").button().click(function() {
-			$("#dialog-form" ).dialog( "open" );
+
+		$("a[name='create-user']").click(function(){
+			$("#register_div" ).dialog( "open" );
 		});
-		
-		$("sm").click(function(){
-			$("#dialog-form" ).dialog( "open" );
+		$("a[name='sign-in']").click(function(){
+			$("#sign_in_div" ).dialog( "open" );
 		});
-		$("sn").click(function(){
-			$("#sign_in_form" ).dialog( "open" );
+		$("a[name='profile']").click(function(){
+			$("#profile_div" ).dialog( "open" );
+		});
+		$("a[name='sign-out']").click(function(){
+			$("#sign_out_form" ).submit();
 		});
 	});
 	</script>
@@ -155,7 +205,7 @@
 
  
 <div class="main">
-	<div id="dialog-form" title="Create new user">
+	<div id="register_div" title="Create new user">
 		* Fields are required
 		<form method ="post" action="RegisterServlet" name="user_register" id="register_form">
 		<fieldset>
@@ -178,12 +228,42 @@
 		</fieldset>
 		</form>
 	  </div>
-	  <div id="sign_in_form" title="User sign in">
-		* Fields are required
-		<form method ="post" action="SignInServlet" name="user_sign_in" id="sign_in_form">
+	  <div id="sign_out_div">
+		<form method ="post" action="SignInOutServlet" name="sign_out" id="sign_out_form">
+			<input type="hidden" id="sign_out_flg" value="1"/>
+		</form>
+	  </div>
+	  <div id="profile_div" title="Edit Profile">
+		<form method ="post" action="ProfileServlet" name="user_profile" id="profile_form">
 		<fieldset>
-			<label for="sign_in_name">*Your email</label>
-			<input type="text" name="sign_in_name" id="sign_in_name" class="text ui-widget-content ui-corner-all" />
+			<label for="name">Name</label>
+			<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" readonly="true"/>
+			<label for="email">Email</label>
+			<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all"  readonly="true"/>
+			<input type="hidden" name="password" id="password"/>
+			<label for="password">Password</label>
+			<input type="password" name="profile_pwd1" id="profile_pwd1" value="" class="text ui-widget-content ui-corner-all" />
+			<label for="password">Password&nbsp;-&nbsp;again</label>
+			<input type="password" name="profile_pwd2" id="profile_pwd2" value="" class="text ui-widget-content ui-corner-all" />
+			<label for="userMobile">Mobile</label>
+			<input type="text" name="userMobile" id="userMobile" class="text ui-widget-content ui-corner-all" />
+			<label for="userHomePhone">Your Home Phone</label>
+			<input type="text" name="userHomePhone" id="userHomePhone" class="text ui-widget-content ui-corner-all" />
+			<label for="userNote">Leave a Note here</label>
+			<input type="text" name="userNote" id="userNote" class="text ui-widget-content ui-corner-all" />
+			<label for="userQQ">Your QQ</label>
+			<input type="text" name="userQQ" id="userQQ" class="text ui-widget-content ui-corner-all" />
+			<label for="userSelfDescription">Leave self description for your friends:</label>
+			<input type="text" name="userSelfDescription" id="userSelfDescription" class="text ui-widget-content ui-corner-all" />
+		</fieldset>
+		</form>
+	  </div>
+	  <div id="sign_in_div" title="User sign in">
+		* Fields are required
+		<form method ="post" action="SignInOutServlet" name="user_sign_in" id="sign_in_form">
+		<fieldset>
+			<label for="sign_in_mail">*Your email</label>
+			<input type="text" name="sign_in_mail" id="sign_in_mail" class="text ui-widget-content ui-corner-all" />
 			<label for="sign_in_pwd">*Password</label>
 			<input type="password" name="sign_in_pwd" id="sign_in_pwd" value="" class="text ui-widget-content ui-corner-all" />
 		</fieldset>
@@ -198,8 +278,13 @@
           <li class="active"><a href="index.html"><span><span>Home</span></span></a></li>
           <li><a href="DemoHubServlet"><span><span>Application demos hub</span></span></a></li>
           <li><a href="contact.html"><span><span>Contact Us</span></span></a></li>
-          <li><a name="create-user"><span><span><sm>Register</sm></span></span></li>
-          <li><a name="sign-in"><span><span><sn>Sign In</sn></span></span></a></li>
+          <%if (session.getAttribute("current_user") == null) {%>
+          <li><a name="create-user" href="#"><span><span>Register</span></span></a></li>
+          <li><a name="sign-in" href="#"><span><span>Sign In</span></span></a></li>
+          <%} else {%>
+          <li><a name="profile" href="#"><span><span>Profile</span></span></a></li>
+          <li><a name="sign-out" href="#"><span><span>Sign Out</span></span></a></li>
+          <%}%>
         </ul>
       </div>
       <div class="clr"></div>

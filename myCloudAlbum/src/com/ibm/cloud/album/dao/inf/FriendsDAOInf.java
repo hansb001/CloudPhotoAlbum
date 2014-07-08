@@ -2,8 +2,8 @@ package com.ibm.cloud.album.dao.inf;
 
 import java.util.List;
 
-import com.ibm.cloud.ablum.exceptions.FriendCantAddedException;
 import com.ibm.cloud.album.beans.UserBean;
+import com.ibm.cloud.album.exceptions.FriendCantAddedException;
 
 public interface FriendsDAOInf {
 	public List<UserBean> getFriends(long userId);

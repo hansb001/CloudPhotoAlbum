@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ibm.cloud.ablum.exceptions.FriendCantAddedException;
 import com.ibm.cloud.album.beans.UserBean;
 import com.ibm.cloud.album.dao.inf.FriendsDAOInf;
+import com.ibm.cloud.album.exceptions.FriendCantAddedException;
 import com.ibm.cloud.album.util.SimplerJDBCHelper;
 
 public class FriendDao implements FriendsDAOInf{

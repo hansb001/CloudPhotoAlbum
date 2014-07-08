@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ibm.cloud.ablum.exceptions.UserRegisteredException;
 import com.ibm.cloud.album.beans.UserBean;
 import com.ibm.cloud.album.dao.UserDAO;
+import com.ibm.cloud.album.exceptions.UserRegisteredException;
 
 /**
  * Servlet implementation class RegisterServlet
