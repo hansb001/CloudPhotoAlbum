@@ -76,12 +76,6 @@ public class UserDAO implements UserDAOInf {
 
 	@Override
 	public int updateUser(UserBean user) throws ProfileUpdateFailedException {
-		
-		String email = user.getEmail();
-		if(isUserExisted(email)){
-			throw new ProfileUpdateFailedException("Your profile update failed, pls try again later!" );
-		}
-		
 		int returnCd = -100;
 
 		//Generate the parameters list

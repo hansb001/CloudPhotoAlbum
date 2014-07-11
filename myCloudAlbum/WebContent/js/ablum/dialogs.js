@@ -69,6 +69,11 @@ $(function() {
 				bValid = bValid && checkLength( name, "username", 3, 16 );
 				bValid = bValid && checkLength( email, "email", 6, 80 );
 				bValid = bValid && checkLength( password, "password", 5, 16 );
+				bValid = bValid && checkLength( password, "mobile", 0, 32 );
+				bValid = bValid && checkLength( password, "home phone", 0, 32 );
+				bValid = bValid && checkLength( password, "note", 0, 255 );
+				bValid = bValid && checkLength( password, "QQ", 0, 32 );
+				bValid = bValid && checkLength( password, "self description", 0, 512 );
 				
 				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
 				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
@@ -78,11 +83,30 @@ $(function() {
 		
 				if ( bValid ) {
 					//$( this ).dialog( "close" );
-					var form = document.getElementById("register_form");
-					form.submit();
+					//var form = document.getElementById("register_form");
+					//form.submit();
+					var currentDialog = $( this );
+					var user = $("#register_form").serialize();
+					$.ajax({
+						type: "get",
+						url: "RegisterServlet",
+						data: user,
+						success: function(msg){
+							if(msg == "success") {
+								currentDialog.dialog( "close" );
+								window.location = "./home.jsp"
+							} else {
+								updateTips(msg);
+							}
+						},
+						error: function(){
+							//error handle
+							updateTips("Create user failed. Try again later.");
+						}
+					});
 				}
 			},
-			Cancel: function() {
+			"Cancel": function() {
 				$( this ).dialog( "close" );
 			}
 		},
@@ -113,11 +137,30 @@ $(function() {
 				if ( bValid ) {
 					//$( this ).dialog( "close" );
 					$("#profile_pwd").val($("#profile_pwd1").val());
-					var form = document.getElementById("profile_form");
-					form.submit();
+					//var form = document.getElementById("profile_form");
+					//form.submit();
+					var currentDialog = $( this );
+					var user = $("#profile_form").serialize();
+					$.ajax({
+						type: "get",
+						url: "ProfileServlet",
+						data: user,
+						success: function(msg){
+							if(msg == "success") {
+								currentDialog.dialog( "close" );
+								//window.location = "./home.jsp"
+							} else {
+								updateTips(msg);
+							}
+						},
+						error: function(){
+							//error handle
+							updateTips("Create user failed. Try again later.");
+						}
+					});
 				}
 			},
-			Cancel: function() {
+			"Cancel": function() {
 				$( this ).dialog( "close" );
 			}
 		},
@@ -144,8 +187,28 @@ $(function() {
 				
 				if ( bValid ) {
 					//$( this ).dialog( "close" );
-					var form = document.getElementById("sign_in_form");
-					form.submit();
+					//var form = document.getElementById("sign_in_form");
+					//form.submit();
+					
+					var currentDialog = $( this );
+					var user = $("#sign_in_form").serialize();
+					$.ajax({
+						type: "get",
+						url: "SignInOutServlet",
+						data: user,
+						success: function(msg){
+							if(msg == "success") {
+								currentDialog.dialog( "close" );
+								window.location = "./home.jsp"
+							} else {
+								updateTips(msg);
+							}
+						},
+						error: function(){
+							//error handle
+							updateTips("Create user failed. Try again later.");
+						}
+					});
 				}
 			},
 			Cancel: function() {

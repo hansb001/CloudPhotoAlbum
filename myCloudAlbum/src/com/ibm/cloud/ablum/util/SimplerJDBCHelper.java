@@ -34,7 +34,7 @@ public class SimplerJDBCHelper {
     	  // Look for the VCAP key that holds the SQLDB information
           for (String eachkey : keys) {
         	  System.out.println ("Key is: " + eachkey);
-        	  if (eachkey.contains("SQLDB")) {
+        	  if (eachkey.contains("sqldb")) {
         		  thekey = eachkey;
         		  break;
         	  }
@@ -60,7 +60,7 @@ public class SimplerJDBCHelper {
         	driver = "com.ibm.db2.jcc.DB2Driver";
         	user = "db2inst1";
         	password = "db2admin";
-        	databaseUrl = "jdbc:db2://192.168.220.128:50000/DB_01";
+        	databaseUrl = "jdbc:db2://192.168.220.129:50000/DB_01";
         	System.out.println("VCAP_SERVICES is null. init the database connection paramater by hard code.");
         } 
        

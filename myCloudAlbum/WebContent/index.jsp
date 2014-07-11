@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/demos.css"  type="text/css"/>
 	<link rel="stylesheet" href="css/mystyle.css" type="text/css"/>
 	<script src="js/common/jquery-1.10.2.js"></script>
+	<script src="js/common/jquery.form.js"></script>
 	<script src="js/common/ui/jquery.ui.core.js"></script>
 	<script src="js/common/ui/jquery.ui.widget.js"></script>
 	<script src="js/common/ui/jquery.ui.mouse.js"></script>

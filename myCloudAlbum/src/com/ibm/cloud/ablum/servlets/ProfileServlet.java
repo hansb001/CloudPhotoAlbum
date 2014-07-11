@@ -1,6 +1,7 @@
 package com.ibm.cloud.ablum.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +34,54 @@ public class ProfileServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Redirect it to weather.jsp
-		response.sendRedirect("index.jsp");
+		//response.sendRedirect("index.jsp");
+		System.out.println("system join the doGET() method of RegisterServlet");
+		
+		String userName = request.getParameter("profile_name");
+		String userEmail = request.getParameter("profile_email");
+		String userHomePhone = request.getParameter("profile_userHomePhone");
+		String userMobile = request.getParameter("profile_userMobile");
+		String userSelfDescription = request.getParameter("profile_userSelfDescription");
+		String userNote = request.getParameter("profile_userNote");
+		String userPassword = request.getParameter("profile_pwd");
+		String userQQ = request.getParameter("userQQ");
+		String userBluePageImgUrl = "https://w3-connections.ibm.com/profiles/photo.do?email=" + userEmail;
+		
+		System.out.println("userName->" + userName);
+		PrintWriter out = response.getWriter();
+		UserBean user = new UserBean();
+		user.setEmail(userEmail);
+		user.setHomePhoneNum(userHomePhone);
+		user.setMobile(userMobile);
+		user.setNote(userNote);
+		user.setPassword(userPassword);
+		user.setQQ(userQQ);
+		user.setSelfIntroduction(userSelfDescription);
+		user.setUserName(userName);
+		user.setImageBluePgUrl(userBluePageImgUrl);
+		
+		UserDAO userDao = new UserDAO();
+		int code = -100;
+		try{
+			code = userDao.updateUser(user);
+		}catch(ProfileUpdateFailedException e){
+			//request.getSession().setAttribute("error_msg", e.getExceptionInfo());
+			//response.sendRedirect("index.jsp");
+			out.print("failed: " + e.getExceptionInfo());
+			return;
+		}
+		System.out.println("user register code is " + code);
+		
+		if(code == 1){
+			//request.getSession().setAttribute("success_msg", 
+			//		"Congratuals! Your have successfully registered as user of cloud photo album, enjoy the moment with your friends!");
+			//response.sendRedirect("home.jsp");
+			out.print("success");
+		}else{
+			//request.getSession().setAttribute("error_msg", "Your input has something wrong, please try it again later for registration!");
+			//response.sendRedirect("index.jsp");
+			out.print("failed: unkonwn error.");
+		}
 	}
 
 	/**
@@ -86,13 +134,6 @@ public class ProfileServlet extends HttpServlet {
 			request.getSession().setAttribute("error_msg", "Your input has something wrong, please try it again later for registration!");
 			response.sendRedirect("index.jsp");
 		}
-	
-		/*UserResource ur = new UserResource();
-		javax.ws.rs.core.Response rep = ur.create(userName, userEmail, userHomePhone, userMobile, userSelfDescription, userNote, userPassword, userQQ);
-		
-		if(rep != null){
-			System.out.println("repstatus:"+ rep.getStatus());
-		}*/
 	}
 
 }
