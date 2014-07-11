@@ -44,7 +44,7 @@ public class ProfileServlet extends HttpServlet {
 		String userSelfDescription = request.getParameter("profile_userSelfDescription");
 		String userNote = request.getParameter("profile_userNote");
 		String userPassword = request.getParameter("profile_pwd");
-		String userQQ = request.getParameter("userQQ");
+		String userQQ = request.getParameter("profile_userQQ");
 		String userBluePageImgUrl = "https://w3-connections.ibm.com/profiles/photo.do?email=" + userEmail;
 		
 		System.out.println("userName->" + userName);

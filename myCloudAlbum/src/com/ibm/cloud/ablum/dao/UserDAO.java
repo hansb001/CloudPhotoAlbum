@@ -25,8 +25,8 @@ public class UserDAO implements UserDAOInf {
 
 	//SQL for user profile update
 	private final static String SQL_USER_UPDATE = "update " + DB_SCHEMA_NAME + ".USER"
-			+ "set USER_PASSWORD = ?,USER_MOBILE = ?, USER_HOME_PHONE = ?, USER_QQ = ?, USER_NOTE = ?, USER_SELF_DESCRIPTION = ?, USER_IMG_URL = ?"
-			+ "where USER_EMAIL = ?";
+			+ " set USER_PASSWORD = ?, USER_MOBILE = ?, USER_HOME_PHONE = ?, USER_QQ = ?, USER_NOTE = ?, USER_SELF_DESCRIPTION = ?, USER_IMG_URL = ?"
+			+ " where USER_EMAIL = ?";
 
 	//SQL for user login
 	private final static String SQL_LOGIN = "select * from " + DB_SCHEMA_NAME + ".USER WHERE USER_EMAIL=? AND USER_PASSWORD=?";
