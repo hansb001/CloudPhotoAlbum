@@ -232,6 +232,17 @@ $(function() {
 	});
 	$("a[id='sign-out']").click(function(){
 		$("#sign_out_flg" ).val("1");
-		$("#sign_out_form" ).submit();
+		var user = $("#sign_out_form").serialize();
+		$.ajax({
+			type: "get",
+			url: "SignInOutServlet",
+			data: user,
+			success: function(msg){
+				if(msg == "success") {
+					//currentDialog.dialog( "close" );
+					window.location = "./index.jsp";
+				}
+			}
+		});
 	});
 });
