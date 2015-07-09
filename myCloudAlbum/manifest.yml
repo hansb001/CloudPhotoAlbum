@@ -1,7 +1,6 @@
 applications:
-- name: myCloudAlbum
-  memory: 1024M
-  host: myCloudAlbum
-  domain: stage1.mybluemix.net
-  services: {
-    }
+- name: TRIPZ
+  host: TRIPZ
+  path: tripz.war
+  mem: 512M
+  instances: 1
